@@ -14,7 +14,7 @@ const data = {
         },
         {
             name: 'Biker2',
-            slug: 'biker-shirt',
+            slug: 'biker-shirt2',
             category: 'image',
             image:'/img/2.jpg',
             price: 69.69,
@@ -26,7 +26,7 @@ const data = {
         },
         {
             name: 'Biker3',
-            slug: 'biker-shirt',
+            slug: 'biker-shirt3',
             category: 'image',
             image:'/img/3.jpg',
             price: 69.69,
