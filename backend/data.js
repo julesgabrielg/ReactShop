@@ -1,6 +1,7 @@
 const data = {
     products: [
         {
+    //        _id: '1',
             name: 'Biker',
             slug: 'biker-shirt',
             category: 'shirt',
@@ -10,21 +11,23 @@ const data = {
             brand: 'Imprenta Cultura',
             rating: 5,
             numReviews: 10,
-            Description: 'Cultivate x Propagate'
+            description: 'Cultivate x Propagate'
         },
         {
+      //      _id: '2',
             name: 'Biker2',
             slug: 'biker-shirt2',
             category: 'image',
             image:'/img/2.jpg',
             price: 69.69,
-            countInStock: 10,
+            countInStock: 0,
             brand: 'Imprenta Cultura',
-            rating: 5,
+            rating: 4.5,
             numReviews: 10,
-            Description: 'Cultivate x Propagate'
+            description: 'Cultivate x Propagate'
         },
         {
+     //       _id: '3',
             name: 'Biker3',
             slug: 'biker-shirt3',
             category: 'image',
@@ -32,9 +35,9 @@ const data = {
             price: 69.69,
             countInStock: 10,
             brand: 'Imprenta Cultura',
-            rating: 5,
+            rating: 3.5,
             numReviews: 10,
-            Description: 'Cultivate x Propagate'
+            description: 'Cultivate x Propagate'
         }
     ]
 };
