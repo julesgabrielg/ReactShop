@@ -1,0 +1,21 @@
+{
+  "name": "reactshop",
+  "version": "1.0.0",
+  "description": "1. Front End - React\r 2. Back End - Node API",
+  "main": "index.js",
+  "scripts": {
+    "build" : "cd backend && npm install --legacy-peer-deps && cd ../frontend && npm install --legacy-peer-deps && npm run build",
+    "start" : "node backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julesgabrielg/ReactShop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julesgabrielg/ReactShop/issues"
+  },
+  "homepage": "https://github.com/julesgabrielg/ReactShop#readme"
+}
