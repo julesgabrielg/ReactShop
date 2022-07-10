@@ -12,6 +12,7 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup'
 import Badge from 'react-bootstrap/Badge'
 import { Helmet } from "react-helmet-async";
+import { toast } from 'react-toastify';
 
 
 
@@ -37,6 +38,7 @@ function Product(props) {
           type: 'CART_ADD_ITEM',
           payload: {...item, quantity},
       });
+      toast.success('Item Added to Cart!');
   }
 
   function MyVerticallyCenteredModal(props) {

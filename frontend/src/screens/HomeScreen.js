@@ -53,7 +53,7 @@ function HomeScreen() {
   <Carousel.Item>
     <img
       className="d-block w-100"
-      src={require('../img/banner\ 1.png')}
+      src={require('../img/banner 1.png')}
       alt="First slide"
     />
     <Carousel.Caption>
@@ -65,7 +65,7 @@ function HomeScreen() {
   <Carousel.Item>
     <img
       className="d-block w-100"
-      src={require('../img/banner\ 2.png')}
+      src={require('../img/banner 2.png')}
       alt="Second slide"
     />
 
@@ -77,7 +77,7 @@ function HomeScreen() {
   <Carousel.Item>
     <img
       className="d-block w-100"
-      src={require('../img/banner\ 3.png')}
+      src={require('../img/banner 3.png')}
       alt="Third slide"
     />
 
