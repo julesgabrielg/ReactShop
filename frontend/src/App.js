@@ -47,7 +47,7 @@ function App() {
               <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto w-100 justify-content-end">
                 <Link to="/cart" className="nav-link">
-                  Cart
+                <i className="fa-solid fa-cart-shopping"></i>
                   {cart.cartItems.length > 0 && (
                     <Badge pill bg="danger">
                       {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
@@ -78,7 +78,7 @@ function App() {
           </Navbar>
         </header>
         <main>
-          <Container className="mt-3">
+
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
@@ -92,7 +92,7 @@ function App() {
               <Route path="/order/:id" element={<OrderScreen/>} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
-          </Container>
+
         </main>
         <footer>
           <div className="text-center"> All Rights Reserved. </div>

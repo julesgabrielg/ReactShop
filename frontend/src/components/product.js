@@ -29,25 +29,76 @@ function Product(props) {
           payload: {...item, quantity},
       });
   }
-    return(
-        <Card className="product">
-                  <Link to={`/product/${product.slug}`}>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="card-img-top"                      
-                    />
-                  </Link>
-                  <Card.Body>
-                    <Link to={`/product/${product.slug}`}>
-                        <Card.Title>{product.name}</Card.Title>
-                      </Link>
-                      <Rating rating ={product.rating} numReviews={product.numReviews} />
-                      <Card.Text>${product.price}</Card.Text>
-                      {product.countInStock === 0? <Button variant='light' disabled>Out of Stock</Button>
-                      : <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>}
-                  </Card.Body>
-                </Card>
+    return (
+      // <Card className="product">
+      //           <Link to={`/product/${product.slug}`}>
+      //             <img
+      //               src={product.image}
+      //               alt={product.name}
+      //               className="card-img-top"
+      //             />
+      //           </Link>
+      //           <Card.Body>
+      //             <Link to={`/product/${product.slug}`}>
+      //                 <Card.Title>{product.name}</Card.Title>
+      //               </Link>
+      //               <Rating rating ={product.rating} numReviews={product.numReviews} />
+      //               <Card.Text>${product.price}</Card.Text>
+      //               {product.countInStock === 0?
+      //                <Button variant='light' disabled>Out of Stock</Button>
+      //               :
+      //                <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>
+      //               }
+      //           </Card.Body>
+      //         </Card>
+
+      <div className="container bootdey">
+        <div className="row">
+          <div className="product-grid col-xs-12 col-sm-auto col-md-auto">
+            <div className="product-item">
+              <div className="image">
+                <a href={`/product/${product.slug}`}>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                  />
+                </a>
+              </div>
+              <div className="caption">
+                <div className="name text-center">
+                  <a href={`/product/${product.slug}`}>{product.name}</a>
+                </div>
+                <div className="price">
+                  <span>${product.price}</span>
+                </div>
+                <div className="cart">
+                  <button type="button" className="btn btn-primary">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+              {/* <button
+                type="button"
+                className="btn btn-default wishlist"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Wishlist"
+              >
+                <i className="fa fa-heart"></i>
+              </button>
+              <button
+                type="button"
+                className="btn btn-default compare"
+                data-toggle="tooltip"
+                data-placement="right"
+                title="Compare"
+              >
+                <i className="fa fa-circle-o"></i>
+              </button> */}
+            </div>
+          </div>
+        </div>
+      </div>
     );
 }
 export default Product;
