@@ -4,8 +4,17 @@ import Button from 'react-bootstrap/Button';
 import {Link} from 'react-router-dom';
 import Rating from './rating';
 import axios from 'axios';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import { Store } from '../store';
+import Modal from 'react-bootstrap/Modal'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import ListGroup from 'react-bootstrap/ListGroup'
+import Badge from 'react-bootstrap/Badge'
+import { Helmet } from "react-helmet-async";
+
+
+
 
 
 function Product(props) {
@@ -29,6 +38,90 @@ function Product(props) {
           payload: {...item, quantity},
       });
   }
+
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {product.name}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* <h4>{product.name}</h4>
+          <p>
+            {product.description}
+          </p> */}
+
+<Row>
+            <Col md={6}>
+                <img className="img-large"
+                src={product.image}
+                alt={product.name}
+                ></img>
+            </Col>
+            <Col md={6}>
+                <ListGroup variant="flush">
+                    <ListGroup.Item>
+                        <Helmet>
+                            <title>{product.name}</title>
+                        </Helmet>
+                        <h1>{product.name}</h1>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                        <Rating rating = {product.rating} numReviews={product.numReviews}></Rating>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                        <p>{product.description}</p>
+                    </ListGroup.Item>
+                </ListGroup>
+
+
+                <Card>
+                    <Card.Body>
+                        <ListGroup variant="flush">
+                            <ListGroup.Item>
+                                <Row>
+                                    <Col>Price:</Col>
+                                    <Col>${product.price}</Col>
+                                </Row>
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                <Row>
+                                    <Col>Status:</Col>
+                                    <Col>
+                                    {product.countInStock>0?
+                                    <Badge bg="success">In Stock</Badge>
+                                    :
+                                    <Badge bg="danger">Out Of Stock</Badge>
+                                    }
+                                    </Col>
+                                </Row>
+                            </ListGroup.Item>
+                        </ListGroup>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={props.onHide}>Close</Button>
+          {product.countInStock >0 && (
+                      <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>
+                            )}
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+  const [modalShow, setModalShow] = useState(false);
+
+
+
     return (
       // <Card className="product">
       //           <Link to={`/product/${product.slug}`}>
@@ -57,7 +150,7 @@ function Product(props) {
           <div className="product-grid col-xs-12 col-sm-auto col-md-auto">
             <div className="product-item">
               <div className="image">
-                <a href={`/product/${product.slug}`}>
+              <a href='javascript:void(0)' onClick={() => setModalShow(true)}>
                   <img
                     src={product.image}
                     alt={product.name}
@@ -66,15 +159,27 @@ function Product(props) {
               </div>
               <div className="caption">
                 <div className="name text-center">
-                  <a href={`/product/${product.slug}`}>{product.name}</a>
+                  <a href='javascript:void(0)' onClick={() => setModalShow(true)}>{product.name}</a>
+                  {/* <a onClick={() => setModalShow(true)}>{product.name}</a> */}
+                  <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
                 </div>
                 <div className="price">
                   <span>${product.price}</span>
                 </div>
                 <div className="cart">
-                  <button type="button" className="btn btn-primary">
-                    Add to Cart
-                  </button>
+                {product.countInStock === 0?
+                <button onClick={() => addToCartHandler(product)} type="button" className="btn btn-primary" disabled>
+                Add to Cart
+              </button>
+                :
+                <button onClick={() => addToCartHandler(product)} type="button" className="btn btn-primary">
+                Add to Cart
+              </button>
+            
+                }
                 </div>
               </div>
               {/* <button
@@ -101,4 +206,8 @@ function Product(props) {
       </div>
     );
 }
+
+
+
 export default Product;
+
