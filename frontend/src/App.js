@@ -20,6 +20,12 @@ import Placeorderscreen from "./screens/placeorderscreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardScreen from "./screens/DashboardScreen";
+import AdminRoute from "./components/adminroute";
+import ProductListScreen from "./screens/ProductListSreen";
+import ProductEditScreen from './screens/ProductEditScreen';
+
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -72,6 +78,23 @@ function App() {
                   Sign In
                   </Link>
                 )};
+
+                {userInfo && userInfo.isAdmin && (
+                  <NavDropDown title="Admin" id="admin-nav-dropdown">
+                    <LinkContainer to="/admin/dashboard">
+                      <NavDropDown.Item>Dashboard</NavDropDown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/products">
+                      <NavDropDown.Item>Products</NavDropDown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/orders">
+                      <NavDropDown.Item>Orders</NavDropDown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/users">
+                      <NavDropDown.Item>Users</NavDropDown.Item>
+                    </LinkContainer>
+                  </NavDropDown>
+                )}
               </Nav>
               </Navbar.Collapse>
             </Container>
@@ -84,12 +107,40 @@ function App() {
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/signup" element={<SignUpScreen />} />
-              <Route path="/profile" element={<ProfileScreen />} />
+              <Route path="/profile" element={
+              <ProtectedRoute>
+              <ProfileScreen />
+              </ProtectedRoute>} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
               <Route path="/payment" element={<Paymentmethodscreen/>} />
               <Route path="/placeorder" element={<Placeorderscreen/>} />
-              <Route path="/orderhistory" element={<OrderHistoryScreen/>} />
-              <Route path="/order/:id" element={<OrderScreen/>} />
+              <Route path="/orderhistory" element={
+              <ProtectedRoute>
+              <OrderHistoryScreen/>
+              </ProtectedRoute>} />
+              <Route path="/order/:id" element={
+              <ProtectedRoute>
+              <OrderScreen/>
+              </ProtectedRoute>} />
+
+              {/*Admin Routes */}
+              <Route path="/admin/dashboard" element={<AdminRoute><DashboardScreen/></AdminRoute>} />
+              <Route
+                path="/admin/products"
+                element={
+                  <AdminRoute>
+                    <ProductListScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+              <Route
+                path="/admin/product/:id"
+                element={
+                  <AdminRoute>
+                    <ProductEditScreen />
+                  </AdminRoute>
+                }
+              ></Route>
               <Route path="/" element={<HomeScreen />} />
             </Routes>
 

@@ -152,16 +152,18 @@ function Product(props) {
           <div className="product-grid col-xs-12 col-sm-auto col-md-auto">
             <div className="product-item">
               <div className="image">
-              <a href='javascript:void(0)' onClick={() => setModalShow(true)}>
+              <button id="buttonLink" className="buttonLink" onClick={() => setModalShow(true)}>
                   <img
                     src={product.image}
                     alt={product.name}
                   />
-                </a>
+              </button>
               </div>
               <div className="caption">
                 <div className="name text-center">
-                  <a href='javascript:void(0)' onClick={() => setModalShow(true)}>{product.name}</a>
+                <button id="buttonLink" className="buttonLink" onClick={() => setModalShow(true)}>
+                    <strong>{product.name}</strong>
+                </button>
                   {/* <a onClick={() => setModalShow(true)}>{product.name}</a> */}
                   <MyVerticallyCenteredModal
           show={modalShow}

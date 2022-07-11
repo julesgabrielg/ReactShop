@@ -339,6 +339,15 @@ body{
   transform: rotate(-45deg)
 }
 
+#buttonLink {
+  background: none;
+  border: none; 
+  padding: 0; 
+  color: #069; 
+  text-decoration: underline; 
+  cursor: pointer;
+}
+
 .product-grid .product-item .sale-tag span {
   color: #fff;
   font-size: 11px;
