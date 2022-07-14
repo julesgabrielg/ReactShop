@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logger from "use-reducer-logger";
 import Row from "react-bootstrap/Row";
@@ -9,8 +8,9 @@ import { Helmet } from "react-helmet-async";
 import LoadingBox from "../components/loadingbox";
 import MessageBox from "../components/messagebox";
 import Carousel from "react-bootstrap/Carousel";
-import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 //import data from "../data";
 
 const reducer = (state, action) => {
@@ -26,8 +26,7 @@ const reducer = (state, action) => {
   }
 };
 
-function HomeScreen() {
-  const navigate = useNavigate();
+function AllProductScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
     products: [],
     loading: true,
@@ -50,7 +49,7 @@ function HomeScreen() {
 
   return (
     <div>
-      <div className="container-fluid pb-5 px-0">
+      <div className="container-fluid pb-0 px-0">
         <Carousel>
           <Carousel.Item>
             <img
@@ -93,57 +92,39 @@ function HomeScreen() {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
+        
       </div>
-      <h1 className="text-center">Featured Products</h1>
-      <p className="text-center">Biker's Collection & New Designs</p>
+      <Navbar bg="dark" variant="dark" sticky="top">
+        <Container>
+          <Navbar.Brand href="#home">Imprenta Cultura</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#features">Features</Nav.Link>
+            <Nav.Link href="#pricing">Pricing</Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
       <Helmet>
         <title>Tindahan</title>
       </Helmet>
 
-      <div className="products">
+      <div className="all-prod">
         {loading ? (
           <LoadingBox />
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
-          <Row>
-            {products.filter(products => products.category === 'shirt').slice(0, 4).map((product) => (
-              <Col key={product.slug} sm={6} md={4} lg={3} >
-                <Product product={product}></Product>
+          <Row className="prod-box">
+            {products.map((product) => (
+              <Col key={product.slug} sm={6} md={4} lg={3} className="">
+                <Product className="col-sm" product={product}></Product>
               </Col>
             ))}
-            <Col className="text-center mb-5">
-            <Link to={"/search?category=shirt&query=all&price=all&rating=all&order=newest&page=1"}>
-            <Button>View More</Button></Link>
-            </Col>
           </Row>
         )}
       </div>
-      <h1 className="text-center">Tote Bags</h1>
-      <p className="text-center">New Tote Bag Designs and Prints</p>
-      <div className="products">
-        {loading ? (
-          <LoadingBox />
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
-        ) : (
-          <Row>
-            {products.filter(products => products.category === 'bag').slice(0, 4).map((product) => (
-              <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
-                <Product product={product}></Product>
-              </Col>
-            ))}
-            <Col className="text-center mb-5">
-            <Link to={"/search?category=bag&query=all&price=all&rating=all&order=newest&page=1"}>
-            <Button>View More</Button></Link>
-            </Col>
-          </Row>
-        )}
-      </div>
-
-      
     </div>
   );
 }
 
-export default HomeScreen;
+export default AllProductScreen;

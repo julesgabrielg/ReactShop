@@ -55,11 +55,6 @@ function Product(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <h4>{product.name}</h4>
-          <p>
-            {product.description}
-          </p> */}
-
 <Row>
             <Col md={6}>
                 <img className="img-large"
@@ -147,13 +142,13 @@ function Product(props) {
       //           </Card.Body>
       //         </Card>
 
-      <div className="container bootdey">
+
         <div className="row">
           <div className="product-grid col-xs-12 col-sm-auto col-md-auto">
             <div className="product-item">
               <div className="image">
               <button id="buttonLink" className="buttonLink" onClick={() => setModalShow(true)}>
-                  <img
+                  <img className="img-fluid"
                     src={product.image}
                     alt={product.name}
                   />
@@ -164,7 +159,6 @@ function Product(props) {
                 <button id="buttonLink" className="buttonLink" onClick={() => setModalShow(true)}>
                     <strong>{product.name}</strong>
                 </button>
-                  {/* <a onClick={() => setModalShow(true)}>{product.name}</a> */}
                   <MyVerticallyCenteredModal
           show={modalShow}
           onHide={() => setModalShow(false)}
@@ -207,7 +201,7 @@ function Product(props) {
             </div>
           </div>
         </div>
-      </div>
+
     );
 }
 

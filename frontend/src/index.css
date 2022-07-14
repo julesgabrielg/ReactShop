@@ -74,7 +74,12 @@ header a{
   color: #ffc000;
 }
 
-.btn-primary{
+.text-bold {
+  font-weight: bold;
+}
+
+.btn-primary,
+.btn-outline-primary{
   background-color: #f0c040;
   color: #000000;
 }
@@ -164,6 +169,15 @@ header a{
 body{
   background: #edf0f5;    
 }
+
+.product-list-search .product-item{
+  height: 35rem;
+}
+
+.product-list-search .image{
+  height: 100%;
+}
+
 .row {
   display: flex;
   justify-content: space-between;
@@ -202,8 +216,11 @@ body{
   z-index: 1
 }
 
+
+
 .product-grid .product-item img {
   width: 100%
+  
 }
 
 .product-grid .product-item .item-overlay {
@@ -386,3 +403,26 @@ body{
 }
 
  }
+
+ /* sidebar */
+.navbar-brand {
+  font-weight: bold;
+}
+.side-navbar {
+  width: 240px;
+  height: 100%;
+  position: absolute;
+  left: -300px;
+  background-color: #100901;
+  transition: 0.5s;
+}
+
+.site-container {
+  transition: 0.4s;
+}
+.active-cont {
+  margin-left: 240px;
+}
+.active-nav {
+  left: 0;
+}

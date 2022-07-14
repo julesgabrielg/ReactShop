@@ -1,6 +1,6 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import HomeScreen from "./screens/HomeScreen";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProductScreen from "./screens/ProductScreen";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -11,7 +11,7 @@ import { Store } from "./store";
 import CartScreen from "./screens/cartscreen";
 import SignInScreen from "./screens/signinscreen";
 import NavDropDown from 'react-bootstrap/NavDropdown';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ShippingAddressScreen from "./screens/shippingaddressScreen";
 import SignUpScreen from "./screens/signupscreen";
@@ -25,6 +25,12 @@ import DashboardScreen from "./screens/DashboardScreen";
 import AdminRoute from "./components/adminroute";
 import ProductListScreen from "./screens/ProductListSreen";
 import ProductEditScreen from './screens/ProductEditScreen';
+import AllProductScreen from "./screens/AllProductsScreen";
+import SearchScreen from "./screens/SearchScreen";
+import Button from 'react-bootstrap/Button';
+import { getError } from './util';
+import axios from 'axios';
+import SearchBox from './components/SearchBox';
 
 
 function App() {
@@ -38,19 +44,47 @@ function App() {
     localStorage.removeItem('paymentMethod');
     window.location.href='/signin';
   };
+
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get(`/api/products/categories`);
+        setCategories(data);
+      } catch (err) {
+        toast.error(getError(err));
+      }
+    };
+    fetchCategories();
+  }, []);
   
   return (
     <BrowserRouter>
-      <div className="d-flex flex-column site-container">
-        <ToastContainer position="bottom-center" limit={1}/>
+    <div
+        className={
+          sidebarIsOpen
+            ? 'd-flex flex-column site-container active-cont'
+            : 'd-flex flex-column site-container'
+        }
+      >        
+      <ToastContainer position="bottom-center" limit={1}/>
         <header>
           <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
+            <Button
+                variant="dark"
+                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+              >
+                <i className="fas fa-bars"></i>
+              </Button>
               <LinkContainer to="/">
                 <Navbar.Brand>Tindahan</Navbar.Brand>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
+              <SearchBox />
               <Nav className="me-auto w-100 justify-content-end">
                 <Link to="/cart" className="nav-link">
                 <i className="fa-solid fa-cart-shopping"></i>
@@ -100,11 +134,35 @@ function App() {
             </Container>
           </Navbar>
         </header>
+        <div
+          className={
+            sidebarIsOpen
+              ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
+              : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
+          }
+        >
+          <Nav className="flex-column text-white w-100 p-2">
+            <Nav.Item>
+              <strong>Categories</strong>
+            </Nav.Item>
+            {categories.map((category) => (
+              <Nav.Item key={category}>
+                <LinkContainer
+                  to={`/search?category=${category}`}
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  <Nav.Link>{category}</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
+            ))}
+          </Nav>
+        </div>
         <main>
 
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
+              <Route path="/search" element={<SearchScreen />} />
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/signup" element={<SignUpScreen />} />
               <Route path="/profile" element={
@@ -114,6 +172,7 @@ function App() {
               <Route path="/shipping" element={<ShippingAddressScreen />} />
               <Route path="/payment" element={<Paymentmethodscreen/>} />
               <Route path="/placeorder" element={<Placeorderscreen/>} />
+              <Route path="/allproducts" element={<AllProductScreen/>} />
               <Route path="/orderhistory" element={
               <ProtectedRoute>
               <OrderHistoryScreen/>
