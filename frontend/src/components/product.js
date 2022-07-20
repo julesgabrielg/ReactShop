@@ -85,7 +85,7 @@ function Product(props) {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Price:</Col>
-                                    <Col>${product.price}</Col>
+                                    <Col className="text-danger">₱{product.price}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
@@ -165,7 +165,7 @@ function Product(props) {
         />
                 </div>
                 <div className="price">
-                  <span>${product.price}</span>
+                  <span>₱{product.price}</span>
                 </div>
                 <div className="cart">
                 {product.countInStock === 0?
