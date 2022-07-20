@@ -43,6 +43,41 @@ export default function Placeorderscreen() {
     cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
     cart.taxPrice = round2(0.15 * cart.itemsPrice);
     cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+
+    const gcashOrderHandler = async() => {
+        console.log(parseInt((cart.totalPrice*100).toFixed(0)))
+        const options = {
+            method: 'POST',
+            url: 'https://api.paymongo.com/v1/sources',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Basic cGtfdGVzdF90UGg3RHdzdjVBSGJLb3F2c3U5TmVIZW86c2tfdGVzdF9WbWJxamdHd3dLREZrUkpGNXY5MjNkdlE='
+            },
+            data: {
+              data: {
+                attributes: {
+                  amount: parseInt((cart.totalPrice*100).toFixed(0)),
+                  redirect: {
+                    success: 'https://localhost:3000/success.js',
+                    failed: 'https://localhost:3000/failed.js'
+                  },
+                  type: 'gcash',
+                  currency: 'PHP'
+                }
+              }
+            }
+          };
+          
+          Axios.request(options).then(function (response) {
+            
+            console.log(response.data);
+          }).catch(function (error) {
+            console.error(error);
+          });
+    }
+
+
     const placeOrderHandler = async () => {
         try{
             dispatch({type: 'CREATE_REQUEST'});
@@ -79,6 +114,8 @@ export default function Placeorderscreen() {
             navigate('payment');
         }
     },[cart, navigate]);
+
+
   return (
     <div>
         <Checkoutsteps step1 step2 step3 step4></Checkoutsteps>
@@ -121,7 +158,7 @@ export default function Placeorderscreen() {
                                             <Link to={`/product/${item.slug}`}>{item.name}</Link>
                                         </Col>
                                         <Col md={3}><span>{item.quantity}</span></Col>
-                                        <Col md={3}>${item.price}</Col>
+                                        <Col md={3}>₱{item.price}</Col>
                                     </Row>
                                 </ListGroup.Item>
                             ))}
@@ -138,25 +175,25 @@ export default function Placeorderscreen() {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>${cart.itemsPrice.toFixed(2)}</Col>
+                                    <Col>₱{cart.itemsPrice.toFixed(2)}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${cart.shippingPrice.toFixed(2)}</Col>
+                                    <Col>₱{cart.shippingPrice.toFixed(2)}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${cart.taxPrice.toFixed(2)}</Col>
+                                    <Col>₱{cart.taxPrice.toFixed(2)}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>                            
                                     <Col><strong>Order Total</strong></Col>
-                                    <Col><strong>${cart.totalPrice.toFixed(2)}</strong></Col>                                   
+                                    <Col><strong>₱{cart.totalPrice.toFixed(2)}</strong></Col>                                   
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
@@ -165,6 +202,15 @@ export default function Placeorderscreen() {
                                 type="button"
                                 onClick={placeOrderHandler}
                                 disabled={cart.cartItems.length === 0}>Place Order</Button>
+                                </div>
+                                {loading && <LoadingBox></LoadingBox>}
+                            </ListGroup.Item>
+                            <ListGroup.Item>
+                                <div className = "d-grid">
+                                <Button
+                                type="button"
+                                onClick={gcashOrderHandler}
+                                disabled={cart.cartItems.length === 0}>Gcash Order</Button>
                                 </div>
                                 {loading && <LoadingBox></LoadingBox>}
                             </ListGroup.Item>
