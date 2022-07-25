@@ -7,7 +7,6 @@ import productRouter from './routes/productroutes.js';
 import userRouter from './routes/userroutes.js';
 import orderRouter from './routes/orderroutes.js';
 import uploadRouter from './routes/uploadRoutes.js';
-import Gcashroutes from './routes/gcashroutes.js';
 
 dotenv.config();
 
@@ -32,7 +31,6 @@ app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
-app.use('/api/gcash', Gcashroutes);
 
 
 const __dirname = path.resolve();
